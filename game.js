@@ -45,19 +45,21 @@ function mouseDown(e) {
   move(e.pageX, e.pageY);
 
   function move(x, y) {
+    let pointElement;
+
     dragged.forEach(({ el, cell, diff }, i) => {
       if (i == 0) {
         el.hidden = true;
-        targetCell = document.elementFromPoint(x, y);
+        pointElement = document.elementFromPoint(x, y);
         el.hidden = false;
       }
 
       if (
-        targetCell instanceof HTMLImageElement &&
-        targetCell.parentNode !== cell
+        pointElement instanceof HTMLImageElement &&
+        pointElement.parentNode !== cell &&
+        pointElement.parentNode !== document.body
       ) {
-      } else {
-        targetCell = null;
+        targetCell = pointElement;
       }
 
       el.style.left = x - diff.x + "px";
@@ -76,14 +78,13 @@ function mouseDown(e) {
 
     if (targetCell) {
       dragged.forEach((drag) => {
-        console.log(drag.cell);
         drag.cell = targetCell.parentNode;
-        console.log(drag.cell);
       });
+
       targetCell = null;
     }
 
-    dragged.forEach(({ el, cell, top, left }) => {
+    dragged.forEach(({ el, cell }) => {
       cell.append(el);
     });
 
