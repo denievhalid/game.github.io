@@ -1,3 +1,5 @@
+let targetCell = null;
+
 const cells = document.querySelectorAll(".cell");
 const cards = document.querySelectorAll(".card");
 
@@ -43,7 +45,21 @@ function mouseDown(e) {
   move(e.pageX, e.pageY);
 
   function move(x, y) {
-    dragged.forEach(({ el, diff }) => {
+    dragged.forEach(({ el, cell, diff }, i) => {
+      if (i == 0) {
+        el.hidden = true;
+        targetCell = document.elementFromPoint(x, y);
+        el.hidden = false;
+      }
+
+      if (
+        targetCell instanceof HTMLImageElement &&
+        targetCell.parentNode !== cell
+      ) {
+      } else {
+        targetCell = null;
+      }
+
       el.style.left = x - diff.x + "px";
       el.style.top = y - diff.y + "px";
     });
@@ -57,10 +73,20 @@ function mouseDown(e) {
 
   this.onmouseup = () => {
     document.removeEventListener("mousemove", mouseMove);
-    this.onmouseup = null;
+
+    if (targetCell) {
+      dragged.forEach((drag) => {
+        console.log(drag.cell);
+        drag.cell = targetCell.parentNode;
+        console.log(drag.cell);
+      });
+      targetCell = null;
+    }
+
     dragged.forEach(({ el, cell, top, left }) => {
       cell.append(el);
     });
+
     cells.forEach((cell) => {
       cell.querySelectorAll(".card").forEach((card, i) => {
         card.style.zIndex = i;
@@ -68,7 +94,6 @@ function mouseDown(e) {
         card.style.left = "0px";
       });
     });
-    dragged = [];
   };
 }
 
