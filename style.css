@@ -1,0 +1,58 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+body {
+  background: url(//st2.razlozhi.ru/662/i/themes/default/bg.png)
+    rgb(44, 115, 59);
+}
+
+.flex {
+  display: flex;
+}
+
+.game {
+  width: 567px;
+}
+
+.cell {
+  position: relative;
+  width: 71px;
+  height: 96px;
+  margin: 5px;
+  background: url("./img/empty.png") no-repeat;
+}
+
+.jcsb {
+  justify-content: space-between;
+}
+
+.card {
+  position: absolute;
+  cursor: pointer;
+}
+
+.cell img:nth-child(1) {
+  top: 0;
+}
+.cell img:nth-child(2) {
+  top: 8px;
+}
+.cell img:nth-child(3) {
+  top: 16px;
+}
+.cell img:nth-child(4) {
+  top: 24px;
+}
+.cell img:nth-child(5) {
+  top: 32px;
+}
+.cell img:nth-child(6) {
+  top: 40px;
+}
+.cell img:nth-child(7) {
+  top: 48px;
+}
